@@ -1,5 +1,7 @@
 import { CacheStorageProxy } from './NativeApiStorageProxy'
 import { NativeDataChangeListener, SyncCacheProxyHandler } from './NativeApiSyncCacheProxy'
+import osChannelApi from './osChannelApi'
+import { RequestTask } from './request'
 
 export class NativeApi {
 
@@ -813,31 +815,29 @@ export class NativeApi {
 }
 
 
-class HybridApi extends NativeApi {
+class HybridProxy {
+  private readonly useAxios: boolean
+  private readonly useOsChannel: boolean
+  private readonly cacheProxy: any
+  private readonly requestApi = 'request'
 
-  hideKeyboard (): any {
-    // @ts-ignore
-    return window.isOsChannel ? osChannel.hideKeyboard() : super.hideKeyboard()
+  constructor (useAxios: boolean, useOsChannel: boolean, nativeApi: NativeApi) {
+    this.useAxios = useAxios
+    this.useOsChannel = useOsChannel
+    this.cacheProxy = new Proxy(nativeApi, new CacheStorageProxy(nativeApi))
   }
 
-  makePhoneCall (_option: any): any {
-    // @ts-ignore
-    return window.isOsChannel ? osChannel.makePhoneCall(_option) : super.makePhoneCall(_option)
-  }
-
-  request (_option: any): any {
-    // @ts-ignore
-    return window.isOsChannel ? osChannel.request(_option) : super.request(_option)
-  }
-
-  getAppAuthorizeSetting (): any {
-    // @ts-ignore
-    return window.isOsChannel ? osChannel.getAppAuthorizeSetting() : super.getAppAuthorizeSetting()
-  }
-
-  getSystemSetting (): any {
-    // @ts-ignore
-    return window.isOsChannel ? osChannel.getSystemSetting() : super.getSystemSetting()
+  get (_target:any, prop:string) {
+    return (...args: any) => {
+      if ( this.useAxios && prop === this.requestApi ) {
+        // @ts-ignore
+        return new RequestTask(...args)
+      }
+      if (this.useOsChannel && osChannelApi.hasOwnProperty(prop)) {
+        return osChannelApi[prop](...args)
+      }
+      return this.cacheProxy[prop](...args)
+    }
   }
 }
 
@@ -866,9 +866,11 @@ export class ProxyChain {
  * 通过[addHandler]添加ProxyHandler
  * 通过[getProxy]获取最终的target
  */
-const native = new ProxyChain(new HybridApi())
+const native = new ProxyChain(new NativeApi())
   .addHandler((target) => new SyncCacheProxyHandler(target))
   .addHandler((target) => new CacheStorageProxy(target))
+  // HybridProxy第一个false是默认走jsb，true是走纯js， 第二个false是不走osChannel
+  .addHandler((target) => new HybridProxy(false, false, target))
   .getProxy()
 
 export default native

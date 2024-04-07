@@ -47,7 +47,7 @@ export const _request = (options) => {
       },
     })
     // @ts-ignore
-    task = window.isOsChannel ? taskID : NativeRequest.getRequestTask(taskID)
+    task = NativeRequest.getRequestTask(taskID)
   }) as any
 
 
@@ -69,7 +69,7 @@ const link = new Link(taroInterceptor)
  * 发起 HTTPS 网络请求
  *
  * @canUse request
- * @__object [url, data, header, timeout, method[OPTIONS, GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, CONNECT], responseType[text, arraybuffer], enableCache]
+ * @__object [url, data, header, timeout, method[OPTIONS, GET, HEAD, POST, PUT, PATCH, DELETE, TRACE, CONNECT], dataType[text, json, arraybuffer, base64], responseType[text, arraybuffer], enableCache]
  * @__success [data, header, statusCode, cookies]
  */
 export function request (options) {
