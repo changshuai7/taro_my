@@ -1,4 +1,6 @@
 import { NativeApi } from './NativeApi'
+import osChannelApi from './osChannelApi'
+import { RequestTask } from './request'
 
 export interface Status {
   done: boolean
@@ -88,5 +90,31 @@ class AsyncToSyncProxy {
       }
     }
     return target[prop]
+  }
+}
+
+export class HybridProxy {
+  private readonly useAxios: boolean
+  private readonly useOsChannel: boolean
+  private readonly cacheProxy: any
+  private readonly requestApi = 'request'
+
+  constructor (useAxios: boolean, useOsChannel: boolean, nativeApi: NativeApi) {
+    this.useAxios = useAxios
+    this.useOsChannel = useOsChannel
+    this.cacheProxy = new Proxy(nativeApi, new CacheStorageProxy(nativeApi))
+  }
+
+  get (_target:any, prop:string) {
+    return (...args: any) => {
+      if ( this.useAxios && prop === this.requestApi ) {
+        // @ts-ignore
+        return new RequestTask(...args)
+      }
+      if (this.useOsChannel && osChannelApi.hasOwnProperty(prop)) {
+        return osChannelApi[prop](...args)
+      }
+      return this.cacheProxy[prop](...args)
+    }
   }
 }

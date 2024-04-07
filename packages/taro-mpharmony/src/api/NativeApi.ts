@@ -1,7 +1,5 @@
-import { CacheStorageProxy } from './NativeApiStorageProxy'
+import { HybridProxy } from './NativeApiHybridProxy'
 import { NativeDataChangeListener, SyncCacheProxyHandler } from './NativeApiSyncCacheProxy'
-import osChannelApi from './osChannelApi'
-import { RequestTask } from './request'
 
 export class NativeApi {
 
@@ -814,33 +812,6 @@ export class NativeApi {
   }
 }
 
-
-class HybridProxy {
-  private readonly useAxios: boolean
-  private readonly useOsChannel: boolean
-  private readonly cacheProxy: any
-  private readonly requestApi = 'request'
-
-  constructor (useAxios: boolean, useOsChannel: boolean, nativeApi: NativeApi) {
-    this.useAxios = useAxios
-    this.useOsChannel = useOsChannel
-    this.cacheProxy = new Proxy(nativeApi, new CacheStorageProxy(nativeApi))
-  }
-
-  get (_target:any, prop:string) {
-    return (...args: any) => {
-      if ( this.useAxios && prop === this.requestApi ) {
-        // @ts-ignore
-        return new RequestTask(...args)
-      }
-      if (this.useOsChannel && osChannelApi.hasOwnProperty(prop)) {
-        return osChannelApi[prop](...args)
-      }
-      return this.cacheProxy[prop](...args)
-    }
-  }
-}
-
 export class ProxyChain {
   private target: any
 
@@ -868,7 +839,6 @@ export class ProxyChain {
  */
 const native = new ProxyChain(new NativeApi())
   .addHandler((target) => new SyncCacheProxyHandler(target))
-  .addHandler((target) => new CacheStorageProxy(target))
   // HybridProxy第一个false是默认走jsb，true是走纯js， 第二个false是不走osChannel
   .addHandler((target) => new HybridProxy(false, false, target))
   .getProxy()
