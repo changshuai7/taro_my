@@ -1733,8 +1733,6 @@ importers:
         specifier: 18.1.0
         version: 18.1.0(react@18.1.0)
 
-  packages/taro-components/loader: {}
-
   packages/taro-extend:
     devDependencies:
       jest:
@@ -2961,8 +2959,8 @@ importers:
   packages/taro-rn:
     dependencies:
       '@bam.tech/react-native-image-resizer':
-        specifier: ~3.0.4
-        version: 3.0.5(react-native@0.70.9)(react@18.1.0)
+        specifier: ~3.0.9
+        version: 3.0.9(react-native@0.70.9)(react@18.1.0)
       '@react-native-async-storage/async-storage':
         specifier: ~1.17.7
         version: 1.17.12(react-native@0.70.9)
@@ -7024,8 +7022,9 @@ packages:
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
 
-  /@bam.tech/react-native-image-resizer@3.0.5(react-native@0.70.9)(react@18.1.0):
-    resolution: {integrity: sha512-u5QGUQGGVZiVCJ786k9/kd7pPRZ6eYfJCYO18myVCH8FbVI7J8b5GT2Svjj2x808DlWeqfaZOOzxPqo27XYvrQ==}
+  /@bam.tech/react-native-image-resizer@3.0.9(react-native@0.70.9)(react@18.1.0):
+    resolution: {integrity: sha512-0Roo0am8DzWR02EFxMof80jaSQo8EHfxLgqtlfE7n7pDQpfrZAXg3Hx2sTIGLaRCo/eGxHoO6vgxSaaLO67mpw==, tarball: https://registry.npmjs.org/@bam.tech/react-native-image-resizer/-/react-native-image-resizer-3.0.9.tgz}
+    engines: {node: '>= 16.0.0'}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -13216,18 +13215,12 @@ packages:
 
   /ajv-formats@1.6.1:
     resolution: {integrity: sha512-4CjkH20If1lhR5CGtqkrVg3bbOtFEG80X9v6jDOIUhbzzbB+UzPBGy8GQhUNVZ0yvMHdMpawCOcy5ydGMsagGQ==}
-    peerDependenciesMeta:
-      ajv:
-        optional: true
     dependencies:
       ajv: 7.2.4
     dev: false
 
   /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependenciesMeta:
-      ajv:
-        optional: true
     dependencies:
       ajv: 8.12.0
 
@@ -21044,7 +21037,7 @@ packages:
       url-parse-lax: 3.0.0
 
   /graceful-fs@4.2.11:
-    resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+    resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==, tarball: https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.11.tgz}
 
   /grapheme-splitter@1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
@@ -25680,7 +25673,7 @@ packages:
       pify: 3.0.0
 
   /make-dir@2.1.0:
-    resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
+    resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==, tarball: https://registry.npmjs.org/make-dir/-/make-dir-2.1.0.tgz}
     engines: {node: '>=6'}
     dependencies:
       pify: 4.0.1
@@ -31581,7 +31574,7 @@ packages:
     engines: {node: '>=0.10.0'}
 
   /source-map@0.6.1:
-    resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
+    resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==, tarball: https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz}
     engines: {node: '>=0.10.0'}
 
   /source-map@0.7.4:
